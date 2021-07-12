@@ -15,9 +15,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'crispy_forms',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
     'core'
 ]
 
@@ -97,3 +100,7 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = ( os.path.join('static'), )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = '/'
