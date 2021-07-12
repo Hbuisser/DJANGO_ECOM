@@ -30,10 +30,15 @@
           </div>
 
           <p class="lead">
-            <span class="mr-1">
-              <del>$200</del>
-            </span>
             <span>${{ object.price }}</span>
+            {% if object.discount_price %}
+            <span class="mr-1">
+              <del>${{ object.price }}</del>
+            </span>
+            <strong>${{ object.discount_price }}</strong>
+            {% else %}
+            <strong>${{ object.price }}</strong>
+            {% endif %}
           </p>
 
           <p class="lead font-weight-bold">Description</p>
