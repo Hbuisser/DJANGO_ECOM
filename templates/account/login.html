@@ -1,5 +1,4 @@
 {% extends "account/base.html" %}
-
 {% load i18n %}
 {% load account socialaccount %}
 {% load crispy_forms_tags %}
@@ -7,14 +6,11 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-
-<main>
-  <div class="container">
-    <!--Section: Products v.3-->
-    <section class="mb-4">
-
-      <div class="row wow fadeIn">
-        <div class='col-6 offset-3'>
+  <main>
+    <div class="container">
+      <section class="mb-4">
+        <div class="row wow fadeIn">
+          <div class='col-6 offset-3'>
           <h1>{% trans "Sign In" %}</h1>
 
           {% get_providers as socialaccount_providers %}
@@ -47,13 +43,13 @@
             {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
-            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+            <a class="btn btn-default" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
             <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
           </form>
+          </div>
         </div>
-      </div>
-    </section>
-  </div>
-</main>
+      </section>
+    </div>
+  </main>
 
 {% endblock %}
