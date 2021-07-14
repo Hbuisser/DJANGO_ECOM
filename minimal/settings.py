@@ -1,4 +1,5 @@
 import os
+from decouple import config
 
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 
@@ -105,3 +106,5 @@ STATICFILES_DIRS = ( os.path.join('static'), )
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/'
+
+# STRIPE_SECRET_KEY = config('STRIPE_TEST_SECRET_KEY')

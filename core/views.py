@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,8 @@ from django.utils import timezone
 from .forms import CheckoutForm
 from .models import Item, OrderItem, Order, BillingAddress
 
+import stripe
+# stripe.api_key = settings.STRIPE_SECRET_KEY
     
 def products(request):
     context = {
@@ -52,6 +55,21 @@ class CheckoutView(View):
         except ObjectDoesNotExist:
             messages.error(self.request, "You do not have an active order")
             return redirect("core:order-summary")
+
+class PaymentView(View):
+    def get(self, *args, **kwargs): 
+        return render(self.request, "payment.html")
+
+    def post(self, *args, **kwargs):
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        token = self.request.POST.get('stripeToken')
+        stripe.Charge.create(
+            amount=order.get_total() * 100,
+            currency="usd",
+            source=token
+        )
+        order.ordered = True
+
 
 
 class HomeView(ListView):
