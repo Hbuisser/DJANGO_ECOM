@@ -49,16 +49,24 @@ class CheckoutView(View):
                 billing_address.save()
                 order.billing_address = billing_address
                 order.save()
-                return redirect('core:checkout')
-            messages.warning(self.request, "Failed checkout")
-            return redirect('core:checkout')
+                if payment_option = 'S':
+                    return redirect('core:payment', payment_option='stripe')
+                elif payment_option = 'P':
+                    return redirect('core:payment', payment_option='paypal')
+                else:
+                    messages.warning(self.request, "Invalid payment option")
+                    return redirect('core:checkout')
         except ObjectDoesNotExist:
             messages.error(self.request, "You do not have an active order")
             return redirect("core:order-summary")
 
 class PaymentView(View):
-    def get(self, *args, **kwargs): 
-        return render(self.request, "payment.html")
+    def get(self, *args, **kwargs):
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        context = {
+            'order':order
+        }
+        return render(self.request, "payment.html", context)
 
     def post(self, *args, **kwargs):
         order = Order.objects.get(user=self.request.user, ordered=False)
