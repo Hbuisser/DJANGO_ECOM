@@ -49,9 +49,9 @@ class CheckoutView(View):
                 billing_address.save()
                 order.billing_address = billing_address
                 order.save()
-                if payment_option = 'S':
+                if payment_option == 'S':
                     return redirect('core:payment', payment_option='stripe')
-                elif payment_option = 'P':
+                elif payment_option == 'P':
                     return redirect('core:payment', payment_option='paypal')
                 else:
                     messages.warning(self.request, "Invalid payment option")
